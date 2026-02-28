@@ -1,3 +1,8 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Fundal și text global */
+body {
+    @apply bg-gray-800 text-black;
+}
