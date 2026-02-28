@@ -3,18 +3,17 @@
   import { Network } from "vis-network";
 
   let container;
-
-  onMount(() => {
+  
     // Nodurile orașelor
-    const nodes = [
-      { id: 1, label: "București" },
-      { id: 2, label: "Craiova" },
-      { id: 3, label: "Timișoara" },
-      { id: 4, label: "Arad" },
-      { id: 5, label: "Cluj-Napoca" },
-      { id: 6, label: "Iași" },
-      { id: 7, label: "Constanța" }
-    ];
+    const cities = [
+       { id: 1, label: "București", population: "1.83M", county: "București", description: "Capitala României" },
+       { id: 2, label: "Craiova", population: "300k", county: "Dolj", description: "Oraș universitar și industrial" },
+       { id: 3, label: "Timișoara", population: "319k", county: "Timiș", description: "Oraș cultural și economic important" },
+       { id: 4, label: "Arad", population: "159k", county: "Arad", description: "Oraș de pe Mureș, important nod feroviar" },
+       { id: 5, label: "Cluj-Napoca", population: "324k", county: "Cluj", description: "Capitala Transilvaniei" },
+       { id: 6, label: "Iași", population: "290k", county: "Iași", description: "Oraș universitar și cultural" },
+       { id: 7, label: "Constanța", population: "283k", county: "Constanța", description: "Port la Marea Neagră" }
+     ];
 
     // Muchiile cu distanță
     const edges = [
@@ -27,7 +26,12 @@
       { from: 5, to: 6, label: "300 km", font: { align: "top" } }  // Cluj - Iași
     ];
 
-    const data = { nodes, edges };
+   // Setare titluri pentru hover automat
+     edges.forEach(e => e.title = `Distanță: ${e.label}`);
+     cities.forEach(c => c.title = `${c.label}\nPopulație: ${c.population}\nJudeț: ${c.county}`);
+
+     onMount(() => {
+       const data = { nodes: cities, edges };
 
     const options = {
       nodes: {
@@ -52,15 +56,23 @@
 
     const network = new Network(container, data, options);
 
-    // Interactivitate: click pe nod
-    network.on("click", (params) => {
-      if (params.nodes.length > 0) {
-        const node = nodes.find(n => n.id === params.nodes[0]);
-        alert(`Oraș selectat: ${node.label}`);
-      }
-    });
-  });
-</script>
+    // Click pe nod se afis card cu informații
+        network.on("click", (params) => {
+          if (params.nodes.length > 0) {
+            const city = cities.find(c => c.id === params.nodes[0]);
+            document.getElementById("info").innerHTML = `
+              <h2 class="text-xl font-bold">${city.label}</h2>
+              <p>Populație: ${city.population}</p>
+              <p>Județ: ${city.county}</p>
+              <p>${city.description}</p>
+               `;
+          }
+        });
+      });
+    </script>
 
 <!-- Container pentru graf -->
 <div bind:this={container} class="w-full h-[500px] rounded-lg shadow-lg bg-gradient-to-r from-purple-200 via-pink-100 to-blue-100 p-4"></div>
+
+<!-- Card info oraș -->
+<div id="info" class="mt-4 p-4 bg-white rounded-lg shadow-md"></div>
