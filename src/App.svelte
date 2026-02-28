@@ -10,14 +10,21 @@
       { id: 1, label: "București" },
       { id: 2, label: "Craiova" },
       { id: 3, label: "Timișoara" },
-      { id: 4, label: "Arad" }
+      { id: 4, label: "Arad" },
+      { id: 5, label: "Cluj-Napoca" },
+      { id: 6, label: "Iași" },
+      { id: 7, label: "Constanța" }
     ];
 
     // Muchiile cu distanță
     const edges = [
       { from: 1, to: 2, label: "230 km", font: { align: "top" } },
       { from: 2, to: 3, label: "320 km", font: { align: "top" } },
-      { from: 3, to: 4, label: "270 km", font: { align: "top" } }
+      { from: 3, to: 4, label: "270 km", font: { align: "top" } },
+      { from: 1, to: 7, label: "225 km", font: { align: "top" } }, // București - Constanța
+      { from: 1, to: 6, label: "400 km", font: { align: "top" } }, // București - Iași
+      { from: 4, to: 5, label: "350 km", font: { align: "top" } }, // Arad - Cluj
+      { from: 5, to: 6, label: "300 km", font: { align: "top" } }  // Cluj - Iași
     ];
 
     const data = { nodes, edges };
@@ -56,4 +63,4 @@
 </script>
 
 <!-- Container pentru graf -->
-<div bind:this={container} class="w-full h-[500px] rounded-lg shadow-lg bg-slate-100 p-4"></div>
+<div bind:this={container} class="w-full h-[500px] rounded-lg shadow-lg bg-gradient-to-r from-purple-200 via-pink-100 to-blue-100 p-4"></div>
